@@ -18,3 +18,11 @@ def pitches():
     View pitches page function that returns the pitches details page and its data
     '''
     return render_template('pitches.html')
+
+@app.route('/pitches')
+def profile():
+
+    '''
+    View profile page function that returns the profile details page and its data
+    '''
+    return render_template('profile.html')

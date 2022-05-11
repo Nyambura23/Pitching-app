@@ -1,5 +1,3 @@
-{% import 'macros.html' as macro%}
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,9 +10,13 @@
   {% else %}
   <title> Welcome to the perfect Pitch website </title>
   {% endif %}
-  <p>Hello there</p>
 </head>
 <body>
+<!-- Content block -->
+
+{% block content %}
+
+{% endblock%}
   
 </body>
 </html>

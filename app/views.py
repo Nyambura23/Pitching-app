@@ -8,8 +8,9 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    message = 'Pitch Perfect'
-    return render_template('index.html',message=message)
+    title='Welcome to Pitch Perfect'
+   
+    return render_template('index.html',title=title)
 
 @app.route('/pitches')
 def pitches():
@@ -19,7 +20,7 @@ def pitches():
     '''
     return render_template('pitches.html')
 
-@app.route('/pitches')
+@app.route('/profile')
 def profile():
 
     '''

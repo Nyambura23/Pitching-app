@@ -1,7 +1,10 @@
-from flask import render_template
+from flask import redirect, render_template,url_for, request,flash
+from models import User
 from . import auth
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask import redirect, render_template,url_for, request,flash
+from .forms import RegistrationForm
+from . import db
+from flask_login import login_user, login_required, logout_user, current_user
 
 @auth.route('/sign-up')
 def sign_up():

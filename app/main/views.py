@@ -1,12 +1,12 @@
 from flask import redirect, render_template,url_for, request,flash
-from app import app
+from . import main
 from werkzeug.security import generate_password_hash,check_password_hash
 
 
 
 
 # Views
-@app.route('/')
+@main.route('/')
 def index():
 
     '''
@@ -16,7 +16,7 @@ def index():
    
     return render_template('index.html',title=title)
 
-@app.route('/pitches')
+@main.route('/pitches')
 def pitches():
 
     '''
@@ -24,7 +24,7 @@ def pitches():
     '''
     return render_template('pitches.html')
 
-@app.route('/profile')
+@main.route('/profile')
 def profile():
 
     '''
@@ -32,7 +32,7 @@ def profile():
     '''
     return render_template('profile.html')
 
-@app.route('/sign-up')
+@main.route('/sign-up')
 def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -62,7 +62,7 @@ def sign_up():
 
     return render_template("sign_up.html", user=current_user)
 
-@app.route('/login')
+@main.route('/login')
 def login():
     if request.method == 'POST':
         email = request.form.get('email')

@@ -1,16 +1,19 @@
-from operator import imod
 from flask import Flask
-from .config import DevConfig
 from flask_bootstrap import Bootstrap
+from config import config_options
 
-# Initializing application
-app = Flask(__name__)
+bootstrap = Bootstrap()
 
-# Setting up configuration
-app.config.from_object(DevConfig)
+def create_app(config_name):
 
-# Initializing Flask Extensions
-bootstrap = Bootstrap(app)
+    app = Flask(__name__)
 
-from app import views
-from app import error
+    # Creating the app configurations
+    app.config.from_object(config_options[config_name])
+
+    # Initializing flask extensions
+    bootstrap.init_app(app)
+
+    # Will add the views and forms
+
+    return app

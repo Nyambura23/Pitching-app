@@ -27,3 +27,20 @@ def profile():
     View profile page function that returns the profile details page and its data
     '''
     return render_template('profile.html')
+
+@app.route('/sign-up')
+def sign_up():
+
+    '''
+    View sign-up page function that returns the sign-up details page and its data
+    '''
+    return render_template('sign-up.html')
+
+@app.route('/login')
+def login():
+
+    '''
+    View login page function that returns the login details page and its data
+    '''
+    return render_template('login.html')
+

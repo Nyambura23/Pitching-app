@@ -4,6 +4,7 @@ from . import main
 from models import User,Pitch, Comment
 from .forms import CommentForm,UpdateProfile
 from .. import db,photos
+import markdown2  
 
 # Views
 @main.route('/')

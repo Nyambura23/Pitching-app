@@ -3,3 +3,5 @@ venv/
 *.pyc
 instance/
 __pycache__
+start.sh
+

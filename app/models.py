@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 
 
 class Pitch(db.Model):
-    __tablename__ = 'pitches'
+    __tablename__ = 'pitch'
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(255),nullable = False)
     post = db.Column(db.Text(), nullable = False)
@@ -31,6 +31,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(255),unique = True,nullable = False)
     email  = db.Column(db.String(255),unique = True,nullable = False)
     secure_password = db.Column(db.String(255),nullable = False)
+    pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
@@ -65,7 +66,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text(),nullable = False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'),nullable = False)
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'),nullable = False)
 
 
     def save_c(self):
@@ -78,32 +79,13 @@ class Comment(db.Model):
 
         return comments
 
-class Pitch(db.Model):
-    __tablename__ = 'pitches'
-    id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String(255),nullable = False)
-    post = db.Column(db.Text(), nullable = False)
-    comment = db.relationship('Comment',backref='pitch',lazy='dynamic')
-    upvote = db.relationship('Upvote',backref='pitch',lazy='dynamic')
-    downvote = db.relationship('Downvote',backref='pitch',lazy='dynamic')
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    time = db.Column(db.DateTime, default = datetime.utcnow)
-    category = db.Column(db.String(255), index = True,nullable = False)
-    
-    def save_p(self):
-        db.session.add(self)
-        db.session.commit()
-
-        
-    def __repr__(self):
-        return f'Pitch {self.post}'
 
 class Upvote(db.Model):
     __tablename__ = 'upvotes'
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
     
 
     def save(self):
@@ -118,12 +100,13 @@ class Upvote(db.Model):
 
     def __repr__(self):
         return f'{self.user_id}:{self.pitch_id}'
+
 class Downvote(db.Model):
     __tablename__ = 'downvotes'
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
     
 
     def save(self):

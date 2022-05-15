@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for,abort,request
 from . import main
 from flask_login import login_required,current_user
-from models import User,Pitch,Comment,Upvote,Downvote
+from app.models import User,Pitch,Comment,Upvote,Downvote
 from .forms import UpdateProfile,PitchForm,CommentForm
 from .. import db,photos
 
@@ -12,7 +12,7 @@ def index():
     followup = Pitch.query.filter_by(category = 'Followup').all() 
     social = Pitch.query.filter_by(category = 'Social').all()
     
-    return render_template('index.html', followup = followup,social = social, pitches = pitches,elevator= elevator)
+    return render_template('index.html',elevator= elevator, followup = followup,social = social, pitches = pitches)
 
 @main.route('/create_new', methods = ['POST','GET'])
 @login_required

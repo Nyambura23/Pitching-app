@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for,abort,request
 from . import main
 from flask_login import login_required,current_user
-from app.models import User,Pitch,Comment,Upvote,Downvote
-from .forms import UpdateProfile,PitchForm,CommentForm
+from app.models import *
+from .forms import *
 from .. import db,photos
 
 @main.route('/')
@@ -83,31 +83,15 @@ def update_pic(name):
 @main.route('/like/<int:id>',methods = ['POST','GET'])
 @login_required
 def like(id):
-    get_pitches = Upvote.get_upvotes(id)
-    valid_string = f'{current_user.id}:{id}'
-    for pitch in get_pitches:
-        to_str = f'{pitch}'
-        print(valid_string+" "+to_str)
-        if valid_string == to_str:
-            return redirect(url_for('main.index',id=id))
-        else:
-            continue
+    pitch = Pitch.query.get(id)
     new_vote = Upvote(user = current_user, pitch_id=id)
     new_vote.save()
-    return redirect(url_for('main.index',id=id))
+    return redirect(url_for('main.index',pitch_id=id))
 
 @main.route('/dislike/<int:id>',methods = ['POST','GET'])
 @login_required
 def dislike(id):
-    pitch = Downvote.get_downvotes(id)
-    valid_string = f'{current_user.id}:{id}'
-    for p in pitch:
-        to_str = f'{p}'
-        print(valid_string+" "+to_str)
-        if valid_string == to_str:
-            return redirect(url_for('main.index',id=id))
-        else:
-            continue
+    pitch = Pitch.query.get(id)
     new_downvote = Downvote(user = current_user, pitch_id=id)
     new_downvote.save()
     return redirect(url_for('main.index',id = id))

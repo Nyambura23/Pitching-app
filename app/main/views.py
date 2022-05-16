@@ -45,9 +45,9 @@ def comment(pitch_id):
     return render_template('comment.html', form =form, pitch = pitch,all_comments=all_comments)
 
 
-@main.route('/user/<name>')
-def profile(name):
-    user = User.query.filter_by(username = name).first()
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
     user_id = current_user._get_current_object().id
     posts = Pitch.query.filter_by(user_id = user_id).all()
     if user is None:
